@@ -10,7 +10,7 @@ On considère un jardinier qui possède un jardin rectangulaire découpé en $n 
 
   - soit 1 case en longueur et 3 en largeur.
 
-Le jardinier cherche à disposer des pièges dans son jardin, avec deux contraintes :
+Le jardinier cherche à disposer des pièges dans son jardin (chaque piège occupe exactement une case), avec deux contraintes :
 
   - aucune taupe ne doit pouvoir pénétrer dans le jardin ;
 
