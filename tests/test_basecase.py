@@ -3,6 +3,7 @@
 Teste les fonctions du module basecase.
 """
 
+import pytest
 import numpy as np
 import basecase as bc
 
@@ -80,6 +81,9 @@ def test_generate():
     # Nombre de pièges :
     got = bc.generate((10, 5), npoints=20)
     assert (got.sum() == 20)
+    # Levée d'exception :
+    with pytest.raises(ValueError):
+        bc.generate((10, 0, 3), npoints=0)
 
 def test_solve():
     "Teste la fonction `solve` du module basecase."
