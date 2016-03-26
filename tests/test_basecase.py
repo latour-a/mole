@@ -1,3 +1,4 @@
+# coding: utf8
 """
 Teste les fonctions du module basecase.
 """

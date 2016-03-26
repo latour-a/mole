@@ -1,3 +1,4 @@
+# coding: utf8
 """
 Ensemble de fonctions pour manipuler une instance du problème "Le jardinier et
 les taupes", dans le cas où l'objectif est :
