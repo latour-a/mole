@@ -72,7 +72,7 @@ def admissible(grid, threshold):
     res = True
     for _ in range(comp.ndim):
         res = (res and _dimcheck(comp, threshold))
-        if res == False:
+        if res is False:
             break
         # Permutation circulaire des axes :
         comp = comp.transpose(comp.ndim - 1, *range(comp.ndim - 1))
