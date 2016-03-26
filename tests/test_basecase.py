@@ -80,3 +80,56 @@ def test_generate():
     # Nombre de pièges :
     got = bc.generate((10, 5), npoints=20)
     assert (got.sum() == 20)
+
+def test_solve():
+    "Teste la fonction `solve` du module basecase."
+    # 1 dimension :
+    grid = np.array([1, 0, 0, 0])
+    got = bc.solve(grid, 2, '1dim')
+    expected = np.array([1, 0, 1, 0])
+    assert (np.all(got == expected) == True)
+    # 2 dimensions, carré, solution unique :
+    grid = np.array([[1, 0], [0, 0]])
+    got = bc.solve(grid, 2, '2dims-unicity')
+    expected = np.array([[1, 0], [0, 1]])
+    assert (np.all(got == expected) == True)
+    # 2 dimensions, nombre de pièges connu (mais solution non unique) :
+    threshold = 3
+    grid = np.array([[0, 0, 0, 0, 0],
+                     [0, 0, 0, 0, 0],
+                     [0, 0, 0, 0, 0],
+                     [0, 0, 0, 0, 0],
+                     [0, 0, 0, 0, 0]])
+    got = bc.solve(grid, threshold, '2dims-square')
+    assert (bc.admissible(got, threshold) == True)
+    assert (bc.score(got, threshold) == 8)
+    # 2 dimensions, non-carré :
+    threshold = 3
+    grid = np.array([[0, 0, 0], [0, 1, 0]])
+    got = bc.solve(grid, threshold, '2dims-rect')
+    assert (bc.admissible(got, threshold) == True)
+    assert (bc.score(got, threshold) == 2)
+    # 2 dimensions, pièges déjà placés :
+    threshold = 3
+    grid = np.array([[0, 0, 1, 0, 0],
+                     [0, 0, 0, 0, 0],
+                     [0, 1, 0, 1, 0],
+                     [0, 0, 0, 0, 0],
+                     [0, 0, 1, 0, 0]])
+    got = bc.solve(grid, threshold, '2dims-preset')
+    assert (bc.admissible(got, threshold) == True)
+    assert (bc.score(got, threshold) == 8)
+    expected = np.array([[0, 0, 1, 0, 0],
+                         [0, 0, 1, 0, 0],
+                         [1, 1, 0, 1, 1],
+                         [0, 0, 1, 0, 0],
+                         [0, 0, 1, 0, 0]])
+    assert (np.all(got == expected) == True)
+    # 2 dimensions, déjà résolu :
+    grid = np.array([[0, 0], [0, 0]])
+    got = bc.solve(grid, 3, '2dims-solved')
+    assert (np.all(got == grid) == True)
+    # 2 dimensions, déjà résolu :
+    grid = np.array([[1, 0], [0, 1]])
+    got = bc.solve(grid, 2, '2dims-solved')
+    assert (np.all(got == grid) == True)
