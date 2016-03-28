@@ -5,6 +5,7 @@ la résolution du problème "Le jardinier et les taupes".
 """
 
 import os
+import time
 import itertools
 import numpy as np
 from uuid import uuid4
@@ -131,3 +132,61 @@ def makeone(pb, params, where):
         return _save(name, params, grid, solution, where)
     else:
         raise ValueError("failed to solve %s." % name)
+
+def makeseveral(pb, params, where, nsamples=None, maxtime=None):
+    """
+    Crée plusieurs données pour l'apprentissage du problème "Le jardinier et les
+    taupes" :
+        1. Génère des instances du problème dans la version du module `pb`,
+           pour les paramètres `params`.
+        2. Résout ces instances.
+        3. Sauvegarde les grilles et leurs solutions.
+    Renvoie la liste des noms des fichiers où sont enregistrés les données (un
+    fichier par donnée).
+
+    Paramètres :
+    ------------
+    - pb
+        Objet permettant de générer et de résoudre des instances du problème.
+    - params : InstanceParams, itérable d'InstanceParams
+        Paramètres de l'instance à générer. Si un itérable est fourni, la
+        fonction le transforme en cycle, afin de pouvoir indéfiniment dessus.
+    - where : chaîne de caractères
+        Dossier dédié au stockage des données pour le problème `pb`.
+    - nsamples : entier positif, None par défaut
+        Nombre maximal d'instances à générer. `None` (la valeur par défaut) est
+        interpétée comme valant l'infini. Si `maxtime` est atteint avant que
+        `nsamples` instances aient été générées, la fonction s'arrête.
+    - maxtime : flottant positif, None par défaut
+        Temps autorisé (en secondes) entre le début de la fonction et le début
+        de la résolution de la dernière instance (si la résolution est très
+        longue, le temps total peut être sensiblement supérieur à `maxtime`).
+        `None` (la valeur par défaut) est interpétée comme valant l'infini. Si
+        `nsamples` est atteint avant `maxtime`, la fonction s'arrête.
+
+    Remarque : si `nsamples` et `maxtime` sont tous les deux fixés à `None`, la
+    fonction fonctionnera indéfiniment, ou jusqu'à ce qu'elle soit manuellement
+    arrêtée par l'utilisateur.
+    """
+    # Modification des paramètres en un format commode :
+    if nsamples is None:
+        nsamples = np.inf
+    if maxtime is None:
+        maxtime = np.inf
+    if isinstance(params, InstanceParams):
+        paramsit = itertools.repeat(params)
+    else:
+        paramsit = itertools.cycle(params)
+    # Initalisation :
+    res = []
+    counter = 0
+    elapsed = 0.0
+    start = time.time()
+    # Itération :
+    while (counter < nsamples) and (elapsed < maxtime):
+        res.append(makeone(pb, next(paramsit), where))
+        if nsamples != np.inf:
+            counter += 1
+        if maxtime != np.inf:
+            elapsed = time.time() - start
+    return res
