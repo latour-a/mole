@@ -1,10 +1,10 @@
-## mole
+# mole
 
 **mole** est un programme visant à résoudre le problème d'optimisation *Le jardinier et les taupes*, proposé dans le cadre d'un challenge professionnel.
 
-# Un problème de taupes
+## Un problème de taupes
 
-On considère un jardinier qui possède un jardin rectangulaire découpé en $n \times m$ cases carrées. Ce jardin est régulièrement envahi par des taupes, mesurant  3 cases sur 1, c'est-à-dire :
+On considère un jardinier qui possède un jardin rectangulaire découpé en *n*x*m* cases carrées. Ce jardin est régulièrement envahi par des taupes, mesurant  3 cases sur 1, c'est-à-dire :
 
   - soit 3 cases en longueur et 1 en largeur ;
 
@@ -20,12 +20,43 @@ Le placement de certains pièges peut être imposé.
 
 **Exemple :** dans le cas où le jardin est de taille $5 \times 5$, la solution optimale est atteinte pour 8 pièges, et est :
 
-|   |   | X |   |   |
-|   |   | X |   |   |
-| X | X |   | X | X |
-|   |   | X |   |   |
-|   |   | X |   |   |
-
+<table>
+<tr>
+    <td></td>
+    <td></td>
+    <td>X</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+    <td>X</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>X</td>
+    <td>X</td>
+    <td></td>
+    <td>X</td>
+    <td>X</td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+    <td>X</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+    <td>X</td>
+    <td></td>
+    <td></td>
+</tr>
+</table>
 
 ## Licence
 
