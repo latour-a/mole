@@ -5,7 +5,7 @@ Teste les fonctions du module basecase.
 
 import pytest
 import numpy as np
-import basecase as bc
+from mole import basecase as bc
 
 def test_admissible():
     "Teste la fonction `admissible` du module basecase."

@@ -7,8 +7,7 @@ import time
 import shutil
 import tempfile
 import numpy as np
-import makedata as mk
-
+from mole import makedata as mk
 
 class TemporaryDirectory(object):
     """
