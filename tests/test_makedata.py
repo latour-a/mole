@@ -4,9 +4,26 @@ Teste les fonctions du module basecase.
 """
 
 import time
+import shutil
 import tempfile
 import numpy as np
 import makedata as mk
+
+
+class TemporaryDirectory(object):
+    """
+    Context manager pour gérer un répertoire temporaire (implémenté dans le
+    module `tempfile` en Python 3).
+    """
+
+    def __init__(self):
+        self.name = tempfile.mkdtemp()
+
+    def __enter__(self):
+        return self.name
+
+    def __exit__(self, exc, value, tb):
+        shutil.rmtree(self.name)
 
 class MockPb():
     """
@@ -46,7 +63,7 @@ def test_makeone():
     "Teste la création d'une donnée via le module makedata."
     pb = MockPb((5, 5), 0, 3)
     params = mk.InstanceParams(pb.shape, pb.npoints, pb.threshold)
-    with tempfile.TemporaryDirectory() as tmpdir:
+    with TemporaryDirectory() as tmpdir:
         # Création d'une donnée :
         output1 = mk.makeone(pb, params, tmpdir)
         grid, solution = mk.load(output1)
@@ -63,7 +80,7 @@ def test_fmt():
     "Teste l'homogénéisation des données lors de l'enregistrement."
     pb = MockPb((2, 5, 3), 1, 2)
     params = mk.InstanceParams(pb.shape, pb.npoints, pb.threshold)
-    with tempfile.TemporaryDirectory() as tmpdir:
+    with TemporaryDirectory() as tmpdir:
         # Création d'une donnée :
         output = mk.makeone(pb, params, tmpdir)
         grid, solution = mk.load(output)
@@ -76,7 +93,7 @@ def test_makeseveral():
     params = mk.InstanceParams(pb.shape, pb.npoints, pb.threshold)
     nsamples = 2
     maxtime = 0.5
-    with tempfile.TemporaryDirectory() as tmpdir:
+    with TemporaryDirectory() as tmpdir:
         # Création de deux données :
         res = mk.makeseveral(pb, params, tmpdir, nsamples=nsamples)
         assert (len(res) == nsamples)
