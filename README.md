@@ -4,7 +4,7 @@
 
 ## Un problème de taupes
 
-On considère un jardinier qui possède un jardin rectangulaire découpé en *n*x*m* cases carrées. Ce jardin est régulièrement envahi par des taupes, mesurant  3 cases sur 1, c'est-à-dire :
+On considère un jardinier qui possède un jardin rectangulaire découpé en *n* x *m* cases carrées. Ce jardin est régulièrement envahi par des taupes, mesurant  3 cases sur 1, c'est-à-dire :
 
   - soit 3 cases en longueur et 1 en largeur ;
 
@@ -18,7 +18,7 @@ Le jardinier cherche à disposer des pièges dans son jardin (chaque piège occu
 
 Le placement de certains pièges peut être imposé.
 
-**Exemple :** dans le cas où le jardin est de taille $5 \times 5$, la solution optimale est atteinte pour 8 pièges, et est :
+**Exemple :** dans le cas où le jardin est de taille 5 x 5, la solution optimale est atteinte pour 8 pièges, et est :
 
 <table>
 <tr>
