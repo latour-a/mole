@@ -99,7 +99,7 @@ def load(fname):
     data = np.load(fname)
     return data["grid"], data["solution"]
 
-def makeone(pb, params, where):
+def makeone(pb, params, where, compdir=None):
     """
     Crée une donnée pour l'apprentissage du problème "Le jardinier et les
     taupes" :
@@ -117,6 +117,9 @@ def makeone(pb, params, where):
         Paramètres de l'instance à générer.
     - where : chaîne de caractères
         Dossier dédié au stockage des données pour le problème `pb`.
+    - compdir : chaîne de caractères, None par défaut
+        Dossier dans lequel effectuer les calculs (il s'agit du répertoire
+        courant si `compdir` vaut `None`).
     """
     # Création d'un nom unique :
     name = str(uuid4())
@@ -126,14 +129,14 @@ def makeone(pb, params, where):
     if pb.admissible(grid, params.threshold):
         solution = grid
     else:
-        solution = pb.solve(grid, params.threshold, name)
+        solution = pb.solve(grid, params.threshold, name, compdir)
     # Sauvegarde :
     if pb.admissible(solution, params.threshold):
         return _save(name, params, grid, solution, where)
     else:
         raise ValueError("failed to solve %s." % name)
 
-def makeseveral(pb, params, where, nsamples=None, maxtime=None):
+def makeseveral(pb, params, where, nsamples=None, maxtime=None, compdir=None):
     """
     Crée plusieurs données pour l'apprentissage du problème "Le jardinier et les
     taupes" :
@@ -163,6 +166,9 @@ def makeseveral(pb, params, where, nsamples=None, maxtime=None):
         longue, le temps total peut être sensiblement supérieur à `maxtime`).
         `None` (la valeur par défaut) est interpétée comme valant l'infini. Si
         `nsamples` est atteint avant `maxtime`, la fonction s'arrête.
+    - compdir : chaîne de caractères, None par défaut
+        Dossier dans lequel effectuer les calculs (il s'agit du répertoire
+        courant si `compdir` vaut `None`).
 
     Remarque : si `nsamples` et `maxtime` sont tous les deux fixés à `None`, la
     fonction fonctionnera indéfiniment, ou jusqu'à ce qu'elle soit manuellement
@@ -184,7 +190,7 @@ def makeseveral(pb, params, where, nsamples=None, maxtime=None):
     start = time.time()
     # Itération :
     while (counter < nsamples) and (elapsed < maxtime):
-        res.append(makeone(pb, next(paramsit), where))
+        res.append(makeone(pb, next(paramsit), where, compdir))
         if nsamples != np.inf:
             counter += 1
         if maxtime != np.inf:

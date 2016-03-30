@@ -48,7 +48,7 @@ class MockPb():
         "Indique si `grid` est une solution."
         return np.all(grid == self._solution)
 
-    def solve(self, grid, threshold, name):
+    def solve(self, grid, threshold, name, compdir=None):
         "Renvoie une fausse solution."
         return self._solution.copy()
 

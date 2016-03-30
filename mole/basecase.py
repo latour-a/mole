@@ -164,7 +164,7 @@ def _slice(index, i, nneighbors, lim):
         return []
     return [index[:i] + (index[i] + j,) + index[(i+1):] for j in rng]
 
-def solve(grid, threshold, name):
+def solve(grid, threshold, name, compdir=None):
     """
     Résout le problème "Le jardinier et les taupes" pour la grille `grid`,
     avec des taupes de taille `threshold`.
@@ -178,6 +178,9 @@ def solve(grid, threshold, name):
         considérée comme non admissible (= taille des taupes).
     - name : chaîne de caractères
         Nom de l'instance à résoudre.
+    - compdir : chaîne de caractères, None par défaut
+        Dossier dans lequel effectuer les calculs (il s'agit du répertoire
+        courant si `compdir` vaut `None`).
 
     Remarque : le nom de l'instance est utilisée comme nom pour le fichier
     d'instruction du solveur. Si la fonction doit être exécutée plusieurs
@@ -212,6 +215,8 @@ def solve(grid, threshold, name):
                         "Cell_%s_dim_%d" % (_key(index), i)
     # Résolution du problème:
     fname = "%s.lp" % name
+    if compdir is not None:
+        fname = os.path.join(compdir, fname)
     prob.writeLP(fname)
     try:
         prob.solve()
