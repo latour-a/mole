@@ -1,6 +1,6 @@
 # mole
 
-**mole** est un programme visant à résoudre le problème d'optimisation *Le jardinier et les taupes*, proposé dans le cadre d'un challenge professionnel.
+**mole** est un programme visant à résoudre le problème d'optimisation *Le jardinier et les taupes*.
 
 ## Un problème de taupes
 
